@@ -1,4 +1,5 @@
 Summary:	ZiLOG Z80 CPU emulator
+Summary(pl.UTF-8):	Emulator procesora ZiLOG Z80
 Name:		z80ex
 Version:	1.1.21
 Release:	1
@@ -7,14 +8,13 @@ Group:		Libraries
 Source0:	http://downloads.sourceforge.net/z80ex/%{name}-%{version}.tar.gz
 # Source0-md5:	92ab8d8f45fd7b448075b820013a5f97
 URL:		http://z80ex.sourceforge.net/
-BuildRequires:	cmake
+BuildRequires:	cmake >= 2.8
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-ZiLOG Z80 CPU emulator
+Z80Ex is a ZiLOG Z80 CPU emulator.
 
 Features:
-
 - precise opcode emulation (documented & undocumented)
 - exact timings for each opcode (including I/O operations)
 - full support for all interrupt modes
@@ -23,29 +23,42 @@ Features:
 - builds as a library with simple callback-based API
 - disassembler included
 
+%description -l pl.UTF-8
+Z80Ex to emulator procesora ZiLOG Z80.
+
+Możliwości:
+- precyzyjna emulacja instrukcji (udokumentowanych i nie)
+- dokładne czasy dla wszystkich instrukcji (wraz z operacjami we/wy)
+- pełna obsługa wszystkich trybów przerwań
+- możliwość utworzenia dowolnej liczby wirtualnych procesorów
+- przenośność - napisany w czystym ANSI C
+- budowanie jako biblioteka z prostym API opartym na wywołaniach
+  zwrotnych
+- dołączony disasembler
+
 %package devel
-Summary:	%{name} header files
-Summary(pl.UTF-8):	Pliki nagłówkowe %{name}
+Summary:	Z80Ex header files
+Summary(pl.UTF-8):	Pliki nagłówkowe Z80Ex
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
-z80ex header files.
+Header files for Z80Ex libraries.
 
 %description devel -l pl.UTF-8
-Pliki nagłówkowe z80ex.
+Pliki nagłówkowe bibliotek Z80Ex.
 
 %package static
-Summary:	Static %{name} libraries
-Summary(pl.UTF-8):	Biblioteki statyczne %{name}
+Summary:	Static Z80Ex libraries
+Summary(pl.UTF-8):	Biblioteki statyczne Z80Ex
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
-Static z80ex libraries.
+Static Z80Ex libraries.
 
 %description static -l pl.UTF-8
-Biblioteki statyczne z80ex.
+Biblioteki statyczne Z80Ex.
 
 %prep
 %setup -q
@@ -53,8 +66,7 @@ Biblioteki statyczne z80ex.
 %build
 install -d build
 cd build
-%cmake \
-	.. \
+%cmake ..
 
 %{__make}
 
@@ -75,18 +87,18 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) %ghost %{_libdir}/libz80ex.so.1
+%doc Changelog README TODO
 %attr(755,root,root) %{_libdir}/libz80ex.so.1.1.21
-%attr(755,root,root) %ghost %{_libdir}/libz80ex_dasm.so.1
+%attr(755,root,root) %ghost %{_libdir}/libz80ex.so.1
 %attr(755,root,root) %{_libdir}/libz80ex_dasm.so.1.1.21
+%attr(755,root,root) %ghost %{_libdir}/libz80ex_dasm.so.1
 
 %files devel
 %defattr(644,root,root,755)
-%doc README TODO
 %attr(755,root,root) %{_libdir}/libz80ex.so
 %attr(755,root,root) %{_libdir}/libz80ex_dasm.so
-%{_examplesdir}/%{name}-%{version}
 %{_includedir}/z80ex
+%{_examplesdir}/%{name}-%{version}
 
 %files static
 %defattr(644,root,root,755)
